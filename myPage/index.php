@@ -36,6 +36,26 @@ and open the template in the editor.
             <li><a href="project2.php">project 2</a>
             <li><a href="project3.php">project 3</a>
         </ul>
+        <select name='project' type='select'>
+            <option value="none">- Select -</option>
+   <option value="project1">Agrilogic</option>
+
+    <option value="project2">Project2</option>
+
+    <option value="project3">Project3</option>
+
+   
+        </select>
+       <select name='test' type='select'>
+            <option value="none">- Select -</option>
+            <option value="project1">Project1</option>
+
+             <option value="project2">Project2</option>
+
+             <option value="project3">Project3</option>
+
+   
+        </select>
         </div>
         <div class="main">
         <h2>Home</h2>
@@ -47,24 +67,38 @@ and open the template in the editor.
             <h2 align="center">Automation Test Result</h2>
 		<table border="1px" width="100%">
                     <tr>
-                    <th>Id</th>
+                    
                     <th>Name</th>
+                    <th>Host</th>
                     <th>Test run Time</th>
-                    <th>Result</th>
+                    <th>Status</th>
+                    <th>Browser</th>
+                  
                 </tr>
                 <?php
-				$conn = mysqli_connect("localhost", "root","") or die(mysql_error()); //Connect to server
-				mysqli_select_db($conn,"test") or die("Cannot connect to database"); //connect to database
-				$query = mysqli_query($conn,"Select * from test"); // SQL Query
+                $conn = mysqli_connect("localhost", "root","") or die(mysql_error()); //Connect to server
+		mysqli_select_db($conn,"results") or die("Cannot connect to database"); //connect to database
+                 if (isset($_POST['Search'])) {
+
+                $search_term = mysql_real_escape_string($_POST['valueToSearch']);
+                $query = mysqli_query($conn,"Select testname, host,date,status,browser, from results where testname like '%".$search_term."%'"); // SQL Query
+                 }
+                 else{
+                      $query = mysqli_query($conn,"Select testname, host,date,status,browser, from results");
+                 }
+				
+				
 				while($row = mysqli_fetch_array($query))
 				{
 					Print "<tr>";
-						Print '<td align="center">'. $row['test_id'] . "</td>";
-						Print '<td align="center">'. $row['test_name'] . "</td>";
-						Print '<td align="center">'. $row['test_runtime']."</td>";
-						Print '<td align="center">'. $row['result']. "</td>";
+						Print '<td align="center">'. $row['testname'] . "</td>";
+						Print '<td align="center">'. $row['host'] . "</td>";
+						Print '<td align="center">'. $row['date']."</td>";
+						Print '<td align="center">'. $row['status']. "</td>";
+                                                Print '<td align="center">'. $row['browser']. "</td>";
 					Print "</tr>";
 				}
+                 
 			?>
         </div>
         <div class="image">
