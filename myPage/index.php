@@ -75,6 +75,7 @@ and open the template in the editor.
                     <th>Browser</th>
                   
                 </tr>
+                
                 <?php
                 $conn = mysqli_connect("localhost", "root","") or die(mysql_error()); //Connect to server
 		mysqli_select_db($conn,"results") or die("Cannot connect to database"); //connect to database
@@ -100,6 +101,8 @@ and open the template in the editor.
 				}
                  
 			?>
+                </table>
+                    
         </div>
         <div class="image">
             <img src="">
